@@ -53,4 +53,14 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserProfile::class);
     }
+
+    public function workOrder()
+    {
+        return $this->hasMany(WorkOrder::class);
+    }
+
+    public function followUp()
+    {
+        return $this->hasMany(WorkOrder::class);
+    }
 }

@@ -18,6 +18,9 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>'administrator'], f
 		'as'	=>	'app.menu',
 		'uses'	=>	'Admin\MenuController@index'
 	]);
+
+	Route::resource('workorder', 'WorkOrderController');
+	
 });
 
 Auth::routes();
