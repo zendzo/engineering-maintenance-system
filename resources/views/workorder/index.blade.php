@@ -31,16 +31,41 @@
             @foreach ($workorders as $workorder)
                 <tr>
                     <td>{{ $workorder->id }}</td>
-                    <td>{{ $workorder->created_at }}</td>
-                    <td>{{ $workorder->finish_at }}</td>
-                    <td>{{ $workorder->location_id }}</td>
-                    <td>{{ $workorder->priority }}</td>
-                    <td>{{ $workorder->category_id }}</td>
+                    <td>{{ $workorder->created_at->format('d-m-Y') }}</td>
+                    <td>{{ $workorder->finish_at->format('d-m-Y') }}</td>
+                    <td>{{ $workorder->location ? $workorder->location->name : 'N/A' }}</td>
+                    <td>
+                      @switch($workorder->priority)
+                          @case(1)
+                            <a href="#" class="disabled btn btn-danger" style="width:100%;">High</a>
+                              @break
+                          @case(2)
+                            <a href="#" class="disabled btn btn-primary" style="width:100%;">Medium</a>
+                              @break
+                          @default
+                            <a href="#" class="disabled btn btn-warning" style="width:100%;">Low</a>
+                      @endswitch
+                    </td>
+                    <td>{{ $workorder->category ? $workorder->category->name : 'N/A' }}</td>
                     <td>{{ $workorder->job }}</td>
-                    <td>{{ $workorder->order_by }}</td>
-                    <td>{{ $workorder->departement_id }}</td>
-                    <td>{{ $workorder->status }}</td>
-                    <td>{{ $workorder->follow_up }}</td>
+                    <td>{{ $workorder->orderBy->fullName }}</td>
+                    <td>{{ $workorder->department ? $workorder->department->name : 'N/A' }}</td>
+                    <td>
+                      @switch($workorder->status)
+                          @case(0)
+                              <p class="text-red"><i class="fa fa-star"></i> New</p>
+                              @break
+                          @case(1)
+                              <p class="text-aqua"><i class="fa fa-spinner"></i> On Progress</p>
+                              @break
+                          @case(2)
+                              <p class="text-yellow"><i class="fa fa-clock-o"></i> Pending</p>
+                              @break
+                          @default
+                              <p class="text-green"><i class="fa fa-check-square-o"></i> Done</p>
+                      @endswitch
+                    </td>
+                    <td>{{ $workorder->followUpBy ? $workorder->followUpBy->fullName : 'N/A' }}</td>
                     <td><img src="{{ asset($workorder->photo) }}" class="img-responsive"></td>
                     <td>
                       <a class="btn btn-small btn-primary" href="{{ route('admin.workorder.edit', $workorder->id) }}">Edit</a>

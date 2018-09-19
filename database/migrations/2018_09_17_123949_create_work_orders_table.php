@@ -22,8 +22,8 @@ class CreateWorkOrdersTable extends Migration
             $table->string('job', 200);
             $table->integer('order_by');
             $table->integer('follow_up')->default(1);
-            $table->integer('departement_id')->default(1);
-            $table->integer('status')->default(1);
+            $table->integer('department_id')->default(1);
+            $table->integer('status')->default(0);
             $table->string('photo', 200)->nullable();
             $table->timestamps();
         });

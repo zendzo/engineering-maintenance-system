@@ -18,6 +18,8 @@ class WorkOrder extends Model
         'status'
     ];
 
+    protected $dates = ['finish_at'];
+
     public function location()
     {
         return $this->belongsTo(Location::class);
@@ -30,16 +32,16 @@ class WorkOrder extends Model
 
     public function orderBy()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'order_by');
     }
 
     public function followUpBy()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'follow_up');
     }
 
-    public function departement()
+    public function department()
     {
-        return $this->belongsTo(Departement::class);
+        return $this->belongsTo(Department::class);
     }
 }

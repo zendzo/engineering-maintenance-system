@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\WorkOrder;
 
 class WorkOrderController extends Controller
@@ -27,16 +28,6 @@ class WorkOrderController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -53,9 +44,9 @@ class WorkOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($status)
     {
-        //
+        return $this->showWorkOrderBy($status);
     }
 
     /**
@@ -90,5 +81,36 @@ class WorkOrderController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    /**
+     * Dsiplay list of workorder by status
+     * 0 = new
+     * 1 = on progress
+     * 2 = pending
+     * 3 = done
+     *
+     * @return Illuminate\Http\Response
+     */
+    public function showWorkOrderBy($status)
+    {
+        switch ($status) {
+            case 'today':
+                $workorders = $this->workorder->where('created_at','>=',Carbon::today())->get();
+                // return view('workorder.index', compact('workorders'));
+                break;
+            case 'progress':
+                $workorders = $this->workorder->where('status',1)->get();
+                // return view('workorder.index', compact('workorders'));
+                break;
+            case 'pending':
+                $workorders = $this->workorder->where('status',2)->get();
+                // return view('workorder.index', compact('workorders'));
+                break;
+            case 'done':
+                $workorders = $this->workorder->where('status',3)->get();
+                break;;
+        }
+        return view('workorder.index', compact('workorders'));
     }
 }
