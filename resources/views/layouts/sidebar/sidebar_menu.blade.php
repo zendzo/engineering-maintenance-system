@@ -3,7 +3,7 @@
 <!-- if user is admin show menu -->
 @if(Auth::user()->role_id === 1)
   @include('administrator.menu.workorder')
-  @include('administrator.menu.calendar')
+  @include('administrator.menu.maintenance')
   @include('administrator.menu.report')
   @include('administrator.menu.setting')
 @endif

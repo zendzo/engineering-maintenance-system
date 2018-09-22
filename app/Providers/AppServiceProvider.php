@@ -4,7 +4,11 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
-use App\MenuCategory;
+use App\Location;
+use App\Department;
+use App\Category;
+use App\User;
+use App\Supplier;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -17,7 +21,16 @@ class AppServiceProvider extends ServiceProvider
     {
         if (! $this->app->runningInConsole()) {
 
-            // View::share('menuCategories', MenuCategory::with('menuItems')->get());
+            View::share('locations', Location::select('id','name')->get());
+
+            View::share('departments', Department::select('id','name')->get());
+
+            View::share('categories', Category::select('id','name')->get());
+
+            View::share('suppliers', Supplier::select('id','name')->get());
+
+            View::share('engineers', User::select('id','username')->where('role_id',4)->get());
+
         }
     }
 

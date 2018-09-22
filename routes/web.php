@@ -20,6 +20,25 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>'administrator'], f
 	]);
 
 	Route::resource('workorder', 'WorkOrderController');
+
+	// Report Section
+	Route::get('report/{type}', [
+		'as' => 'report.type',
+		'uses' => 'ReportController@showReportType'
+	]);
+
+	// Settings Section
+	Route::get('setting/{type}', [
+		'as'	=> 'setting.type',
+		'uses'	=> 'SettingController@showSettingType'
+	]);
+
+	// maintenance calendar and assets
+	Route::resource('calendar', 'CalendarController');
+
+	Route::resource('maintenance_task', 'MaintenanceTaskController');
+
+	Route::resource('asset', 'AssetController');
 	
 });
 

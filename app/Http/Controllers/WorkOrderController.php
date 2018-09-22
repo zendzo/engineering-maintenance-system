@@ -22,7 +22,7 @@ class WorkOrderController extends Controller
      */
     public function index()
     {
-        $workorders = $this->workorder->all();
+        $workorders = $this->workorder->all()->sortByDesc('id');
 
         return view('workorder.index', compact('workorders'));
     }
@@ -35,7 +35,7 @@ class WorkOrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $this->createWorkOrder($request);
     }
 
     /**
@@ -97,20 +97,44 @@ class WorkOrderController extends Controller
         switch ($status) {
             case 'today':
                 $workorders = $this->workorder->where('created_at','>=',Carbon::today())->get();
-                // return view('workorder.index', compact('workorders'));
                 break;
             case 'progress':
                 $workorders = $this->workorder->where('status',1)->get();
-                // return view('workorder.index', compact('workorders'));
                 break;
             case 'pending':
                 $workorders = $this->workorder->where('status',2)->get();
-                // return view('workorder.index', compact('workorders'));
                 break;
             case 'done':
                 $workorders = $this->workorder->where('status',3)->get();
                 break;;
         }
         return view('workorder.index', compact('workorders'));
+    }
+
+    public function createWorkOrder($request)
+    {
+        try{
+            $this->workorder->create([
+                'priority' => $request->get('priority'),
+                'location_id' => $request->get('location'),
+                'category_id' => $request->get('category'),
+                'job' => $request->get('job'),
+                'order_by' => auth()->id(),
+                'follow_up' => $request->get('follow_up'),
+                'department_id' => $request->get('department'),
+                'status' => $request->get('status')
+            ]);
+
+            return redirect()->back()
+                    ->with('message', 'Work Order Saved!')
+                    ->with('status','Data Successfully Saved!')
+                    ->with('type','success');
+
+        }catch(\Exception $e){
+            return redirect()->back()
+                    ->with('message', $e->getMessage())
+                    ->with('status','Failed to Save Entry Data !')
+                    ->with('type','error');
+        }
     }
 }
