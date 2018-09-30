@@ -28,6 +28,10 @@ class CreateAssetsTable extends Migration
             $table->text('description')->nullable();
             $table->timestamps();
         });
+
+        Schema::table('maintenance_events', function (Blueprint $table) {
+            $table->foreign('asset_id')->references('id')->on('assets')->onDelete('cascade');
+        });
     }
 
     /**

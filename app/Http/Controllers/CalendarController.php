@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use MaddHatter\LaravelFullcalendar\Facades\Calendar;
 use App\MaintenanceEvent;
 use Carbon\Carbon;
+use App\Asset;
 
 class CalendarController extends Controller
 {
@@ -26,7 +27,9 @@ class CalendarController extends Controller
 
         $calendar = Calendar::addEvents($events);
 
-        return view('calendar.index', compact(['calendar','events']));
+        $assets = Asset::select(['id','property'])->get();
+
+        return view('calendar.index', compact(['calendar','events','assets']));
     }
 
     /**
@@ -104,6 +107,7 @@ class CalendarController extends Controller
 
             $data = $this->schedule->create([
                 'title' => $request->get('title'),
+                'asset_id' => $request->get('asset_id'),
                 'all_day' => $request->get('all_day'),
                 'start' => $start_date,
                 'end' => $end_date,

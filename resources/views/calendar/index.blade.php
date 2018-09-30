@@ -23,6 +23,20 @@
                     @endif
                 </div>
 
+                <div class="form-group{{ $errors->has('asset_id') ? ' has-error' : '' }}">
+                  <label for="asset_id" class="control-label">Asset to Sign</label>
+                  <select class="form-control" name="asset_id" id="asset_id">
+                    @foreach ($assets as $asset)
+                       <option value="{{ $asset->id }}">{{ $asset->property }}</option>
+                    @endforeach
+                  </select>
+                    @if ($errors->has('asset_id'))
+                        <span class="help-block">
+                            <strong>{{ $errors->first('asset_id') }}</strong>
+                        </span>
+                    @endif
+                </div>
+
                 <div class="form-group{{ $errors->has('all_day') ? ' has-error' : '' }}">
                     <label for="all_day" class="control-label">All Day</label>
                     <select class="form-control" name="all_day" id="all_day">
@@ -86,6 +100,7 @@
             <thead>
             <tr>
               <th>Title</th>
+              <th>Asset</th>
               <th>Start Date</th>
               <th>End Date</th>
               <th>Task</th>
@@ -96,12 +111,15 @@
               @foreach ($events as $event)
                   <tr>
                     <td>{{$event->title}}</td>
+                    <td>{{$event->asset->property}}</td>
                     <td>{{$event->start}}</td>
                     <td>{{$event->end}}</td>
                     <td style="background-color: {{ $event->background_color }}">
                      @include('calendar.maintenance_task_modal')
                     </td>
-                    <td>{{$event->title}}</td>
+                    <td><a class="btn btn-danger btn-small" href="{{ route('admin.asset.destroy', $event->id) }}">
+                      <i class="fa fa-trash-o"></i>
+                    </a></td>
                   </tr>
               @endforeach
             </tbody>

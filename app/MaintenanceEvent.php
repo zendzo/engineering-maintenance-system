@@ -9,6 +9,7 @@ class MaintenanceEvent extends Model implements Event
 {
     protected $fillable = [
         'title',
+        'asset_id',
         'all_day',
         'start',
         'end',
@@ -17,6 +18,15 @@ class MaintenanceEvent extends Model implements Event
 
     protected $dates = ['start', 'end'];
 
+    public function asset()
+    {
+        return $this->belongsTo(Asset::class);
+    }
+    /**
+     * tasks
+     *
+     * @return void
+     */
     public function tasks()
     {
         return $this->hasMany(MaintenanceTask::class);

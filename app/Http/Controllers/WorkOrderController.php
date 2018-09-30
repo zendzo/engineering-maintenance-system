@@ -24,7 +24,11 @@ class WorkOrderController extends Controller
     {
         $workorders = $this->workorder->all()->sortByDesc('id');
 
-        return view('workorder.index', compact('workorders'));
+        $status = ['new','on progress','pending','done'];
+
+        $workordersStatus = collect($status);
+
+        return view('workorder.index', compact(['workorders','workordersStatus']));
     }
 
     /**
@@ -69,7 +73,29 @@ class WorkOrderController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+       try {
+            $update = $this->workorder->findOrFail($id)->update([
+            'priority' => $request->get('priority'),
+            'location_id' => $request->get('location'),
+            'category_id' => $request->get('category'),
+            'job' => $request->get('job'),
+            'order_by' => auth()->id(),
+            'follow_up' => $request->get('follow_up'),
+            'department_id' => $request->get('department'),
+            'status' => $request->get('status')
+        ]);
+
+        if ($update) {
+            return redirect()->back()
+                ->with('message', 'Work Order Saved!')
+                ->with('status','Data Successfully Saved!')
+                ->with('type','success');
+        }
+       }catch(\Exception $e){
+        return redirect()->back()
+            ->with('message', $e->getMessage())
+            ->with('status','Failed to Update Entry Data !');
+       }
     }
 
     /**

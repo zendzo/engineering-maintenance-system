@@ -36,4 +36,9 @@ class Asset extends Model
     {
         return $this->belongsTo(Supplier::class);
     }
+
+    public function maintenanceEvents()
+    {
+        return $this->hasMany(MaintenanceEvent::class);
+    }
 }

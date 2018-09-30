@@ -13,5 +13,7 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         factory(User::class, 5)->create();
+
+        $this->command->info('Successfully created 5 users data!');
     }
 }

@@ -68,8 +68,11 @@
                     <td>{{ $workorder->followUpBy ? $workorder->followUpBy->fullName : 'N/A' }}</td>
                     {{-- <td><img src="{{ asset($workorder->photo) }}" class="img-responsive"></td> --}}
                     <td>
-                      @include('workorder.modal')
+                        <a class="btn btn-xs btn-primary" href="#" data-toggle="modal" data-target="#workOrderModal-{{ $workorder->id }}">
+                          <i class="fa fa-edit"></i>
+                        </a>
                     </td>
+                    @include('workorder.modal')
                 </tr>
             @endforeach
           </tbody>

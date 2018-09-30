@@ -20,6 +20,7 @@ class CreateMaintenanceEventsTable extends Migration
             $table->date('start');
             $table->date('end');
             $table->string('background_color', 100)->nullable()->default('#1197C1');
+            $table->integer('asset_id')->unsigned();
             $table->string('url', 100)->nullable();
             $table->timestamps();
         });
