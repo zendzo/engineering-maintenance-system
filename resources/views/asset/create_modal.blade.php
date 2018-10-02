@@ -7,7 +7,7 @@
           <h4 class="modal-title">Add New Asset</h4>
         </div>
         <div class="modal-body">
-            <form role="form"  action="{{ route('admin.asset.store') }}" method="POST">
+            <form role="form"  action="{{ route('admin.asset.store') }}" method="POST" enctype="multipart/form-data">
                 {{ csrf_field() }}
   
                 <div class="form-group{{ $errors->has('property') ? ' has-error' : '' }}">

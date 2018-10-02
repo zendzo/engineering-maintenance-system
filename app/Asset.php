@@ -3,9 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
-class Asset extends Model
+class Asset extends Model implements HasMedia
 {
+    use HasMediaTrait;
+    
     protected $fillable = [
         'photo',
         'category_id',

@@ -72,7 +72,7 @@
                           <i class="fa fa-edit"></i>
                         </a>
                     </td>
-                    @include('workorder.modal')
+                    @include('workorder.edit_modal')
                 </tr>
             @endforeach
           </tbody>
@@ -108,14 +108,61 @@
       responsive: true,
       dom: 'Bfrtip',
         buttons: [
-            {
-                text: 'Create New WO',
+          {
+                text: '<i class="fa fa-plus"></i> New Work Order',
+                attr: {class : 'btn btn-info'},
                 action: function ( e, dt, node, config ) {
                    $('#createWorkOrder').modal('show');
                 }
             },
-            { extend:'copy', attr: { id: 'allan' } },
-            'csv', 'excel', 'pdf', 'print'
+            { 
+              extend:'copy', 
+              attr: { id: 'allan' },
+              text:      '<i class="fa fa-files-o"></i> Copy',
+              titleAttr: 'Copy rows to clipboard',
+              exportOptions: {
+                    columns: [0,1,2,3,4,5,6,7,8,9,10]
+                }
+              },
+            {
+                extend: 'pdfHtml5',
+                orientation: 'landscape',
+                pageSize: 'LEGAL',
+                messageTop: 'Work Order Data Report',
+                title: 'Work Order Data ' + '{{ config('app.name') }}',
+                text:      '<i class="fa fa-file-pdf-o"></i> PDF',
+                titleAttr: 'Export rows to PDF format',
+                exportOptions: {
+                    columns: [0,1,2,3,4,5,6,7,8,9,10]
+                },
+            },
+            {
+                extend:    'csvHtml5',
+                text:      '<i class="fa fa-file-text-o"></i> CSV',
+                titleAttr: 'Export rows to CSV format',
+                exportOptions: {
+                    columns: [0,1,2,3,4,5,6,7,8,9,10]
+                },
+                title: 'Work Order Data ' + '{{ config('app.name') }}'
+            },
+            {
+                extend:    'excelHtml5',
+                text:      '<i class="fa fa-file-excel-o"></i> Excel',
+                titleAttr: 'Export rows to Excel format',
+                exportOptions: {
+                    columns: [0,1,2,3,4,5,6,7,8,9,10]
+                },
+                title: 'Work Order Data ' + '{{ config('app.name') }}'
+            },
+            {
+                extend:    'print',
+                text:      '<i class="fa fa-print"></i> Print',
+                titleAttr: 'Print rows',
+                exportOptions: {
+                    columns: [0,1,2,3,4,5,6,7,8,9,10]
+                },
+                title: 'Work Order Data ' + '{{ config('app.name') }}'
+            },
         ]
     });
   });

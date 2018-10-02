@@ -97,8 +97,7 @@ class AssetController extends Controller
     {
         $purcashed_at = Carbon::createFromFormat('m/d/Y', $request->get('purcashed_at'));
         try {
-            $data = $this->asset->create([
-                'photo' => 'test',
+            $asset = $this->asset->create([
                 'category_id' => $request->get('category_id'),
                 'location_id' => $request->get('location_id'),
                 'property' => $request->get('property'),
@@ -111,7 +110,11 @@ class AssetController extends Controller
                 'description' => $request->get('description')
             ]);
 
-            if ($data) {
+            if ($request->hasFile('photo')) {
+                $asset->addMediaFromRequest('photo')->toMediaCollection('images');
+            }
+
+            if ($asset) {
                 return redirect()->back()->with('message', 'Asset Data Created!')
                     ->with('status','Data Successfully Saved!')
                     ->with('type','success');
