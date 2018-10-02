@@ -7,7 +7,7 @@
         <h4 class="modal-title">Create New Work Order</h4>
       </div>
       <div class="modal-body">
-          <form role="form"  action="{{ route('admin.workorder.store') }}" method="POST">
+          <form role="form"  action="{{ route('admin.workorder.store') }}" method="POST" enctype="multipart/form-data">
               {{ csrf_field() }}
 
               <div class="form-group{{ $errors->has('priority') ? ' has-error' : '' }}">

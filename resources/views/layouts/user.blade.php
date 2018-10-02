@@ -56,7 +56,6 @@
                   <li><a href="{{ route('register') }}">Register</a></li>
                   <li><a href="{{ route('password.request') }}">Reset Password</a></li>
                 @endif
-                <li><a href="#">Separated link</a></li>
                 <li class="divider"></li>
                 <li><a href="#">One more separated link</a></li>
               </ul>

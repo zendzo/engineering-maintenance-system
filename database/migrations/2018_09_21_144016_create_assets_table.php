@@ -15,7 +15,7 @@ class CreateAssetsTable extends Migration
     {
         Schema::create('assets', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('photo')->nullable();
+            // $table->string('photo')->nullable();
             $table->integer('category_id');
             $table->integer('location_id');
             $table->string('property');

@@ -31,6 +31,10 @@ class AppServiceProvider extends ServiceProvider
 
             View::share('engineers', User::select('id','username')->where('role_id',4)->get());
 
+            $status = ['new','on progress','pending','done'];
+
+            View::share('workordersStatus', collect($status));
+
         }
     }
 

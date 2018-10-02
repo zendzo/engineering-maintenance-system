@@ -14,6 +14,6 @@ $factory->define(App\WorkOrder::class, function (Faker $faker) {
         'follow_up' => rand(2,5),
         'department_id' => rand(1,2),
         'status' => rand(0,3),
-        'photo' => '/upload/data-upload/test-image/tips-dan-cara-jitu-cari-perumahan-murah.jpg'
+        // 'photo' => '/upload/data-upload/test-image/tips-dan-cara-jitu-cari-perumahan-murah.jpg'
     ];
 });
