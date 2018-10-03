@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Hash;
-use App\User;
+use Illuminate\Http\Request;
+use App\Category;
 
-class UserController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Store a newly created resource in storage.
@@ -18,9 +17,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'username' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'category' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()){
@@ -30,16 +27,13 @@ class UserController extends Controller
         }
         
         try {
-            $role = Role::findorFail($request['role']);
-            $create =  $role->users()->create([
-                'username' => $request['username'],
-                'email' => $request['email'],
-                'password' => Hash::make($request['password']),
+            $create =  Category::create([
+                'name' => $request['category']
             ]);
             
             if ($create) {
-                return redirect()->back()->with('message', 'New User Created!!')
-                    ->with('status','Successfully Save Entry Data !')
+                return redirect()->back()->with('message', 'Location Data Updated!')
+                    ->with('status','Successfully Save Edited Data !')
                     ->with('type','success');
             }
         }catch (\Exception $e){
@@ -50,40 +44,16 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
         $validator = Validator::make($request->all(), [
-            'username' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,'.$id,
-            'password' => 'required|string|min:6|confirmed',
+            'category' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()){
@@ -93,16 +63,12 @@ class UserController extends Controller
         }
         
         try {
-            $user = User::findorFail($id);
-            $create =  $user->update([
-                'username' => $request['username'],
-                'email' => $request['email'],
-                'password' => Hash::make($request['password']),
-                'role_id' => $request['role'],
+            $update =  $category->update([
+                'name' => $request['category']
             ]);
             
-            if ($create) {
-                return redirect()->back()->with('message', 'User Data Updated!!')
+            if ($update) {
+                return redirect()->back()->with('message', 'Location Data Updated!')
                     ->with('status','Successfully Save Edited Data !')
                     ->with('type','success');
             }
@@ -116,10 +82,10 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
         //
     }

@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Department;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Hash;
-use App\User;
+use Illuminate\Http\Request;
 
-class UserController extends Controller
+class DepartmentController extends Controller
 {
+
     /**
      * Store a newly created resource in storage.
      *
@@ -18,9 +18,7 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'username' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'name' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()){
@@ -30,15 +28,13 @@ class UserController extends Controller
         }
         
         try {
-            $role = Role::findorFail($request['role']);
-            $create =  $role->users()->create([
-                'username' => $request['username'],
-                'email' => $request['email'],
-                'password' => Hash::make($request['password']),
+            
+            $create =  Department::create([
+                'name' => $request['name']
             ]);
             
             if ($create) {
-                return redirect()->back()->with('message', 'New User Created!!')
+                return redirect()->back()->with('message', 'New Department Added!')
                     ->with('status','Successfully Save Entry Data !')
                     ->with('type','success');
             }
@@ -50,40 +46,16 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Department $department)
     {
         $validator = Validator::make($request->all(), [
-            'username' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,'.$id,
-            'password' => 'required|string|min:6|confirmed',
+            'name' => 'required|string|max:255',
         ]);
 
         if ($validator->fails()){
@@ -93,17 +65,14 @@ class UserController extends Controller
         }
         
         try {
-            $user = User::findorFail($id);
-            $create =  $user->update([
-                'username' => $request['username'],
-                'email' => $request['email'],
-                'password' => Hash::make($request['password']),
-                'role_id' => $request['role'],
+            
+            $create =  $department->update([
+                'name' => $request['name']
             ]);
             
             if ($create) {
-                return redirect()->back()->with('message', 'User Data Updated!!')
-                    ->with('status','Successfully Save Edited Data !')
+                return redirect()->back()->with('message', 'Department Data Updated!')
+                    ->with('status','Successfully Save Entry Data !')
                     ->with('type','success');
             }
         }catch (\Exception $e){
@@ -116,10 +85,10 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Department  $department
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Department $department)
     {
         //
     }

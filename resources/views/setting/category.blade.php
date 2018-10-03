@@ -14,27 +14,27 @@
               <table id="example2" class="table table-hover">
                 <thead>
                 <tr>
-                  <th class="text-center">Location Name</th>
+                  <th class="text-center">Work Order Category Name</th>
                   <th>#</th>
                 </tr>
                 </thead>
                 <tbody>
-                  @if(!is_null($locations))
-                    @foreach($locations as $location)
+                  @if(!is_null($categories))
+                    @foreach($categories as $category)
                      <tr>
-                        <td>{{ $location->name }}</td>
+                        <td>{{ $category->name }}</td>
                         <td width="20%">
-                           <a class="btn btn-xs btn-info" href="{{ route('admin.role.show',$location->id) }}">
+                           <a class="btn btn-xs btn-info" href="{{ route('admin.role.show',$category->id) }}">
                               <span class="fa fa-info fa-fw"></span>
                            </a>
-                           <a class="btn btn-xs btn-primary" data-toggle="modal" data-target="#roleModalEdit-{{ $location->id }}" href="#">
+                           <a class="btn btn-xs btn-primary" data-toggle="modal" data-target="#roleModalEdit-{{ $category->id }}" href="#">
                               <span class="fa fa-pencil fa-fw"></span>
                            </a>
                            <!-- Modal Form Edit-->
-                           <div class="modal fade" id="roleModalEdit-{{ $location->id }}" tabindex="-1" role="dialog" aria-labelledby="roleModalEdit-{{ $location->id }}">
-                              @include('setting.location.edit_modal')
+                           <div class="modal fade" id="roleModalEdit-{{ $category->id }}" tabindex="-1" role="dialog" aria-labelledby="roleModalEdit-{{ $category->id }}">
+                              @include('setting.category.edit_modal')
                            </div>
-                              <form method="POST" action="{{ route('admin.user.destroy',$location->id) }}" accept-charset="UTF-8" style="display:inline">
+                              <form method="POST" action="{{ route('admin.user.destroy',$category->id) }}" accept-charset="UTF-8" style="display:inline">
                               {{ method_field('DELETE') }}
                               {{ csrf_field() }}
                               <button type="submit" class="btn btn-xs btn-danger">
@@ -57,7 +57,7 @@
 
             <!-- Modal Form -->
             <div class="modal fade" id="roleModal" tabindex="-1" role="dialog" aria-labelledby="roleModal">
-               @include('setting.location.create_modal')
+               @include('setting.category.create_modal')
             </div>
 
           </div>

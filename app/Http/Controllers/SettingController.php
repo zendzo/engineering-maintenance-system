@@ -43,12 +43,12 @@ class SettingController extends Controller
                 return view('setting.location', compact('locations'));
                 break;
             case 'category':
-                $locations = $this->category->all();
-                return view('setting.location', compact('locations'));
+                $categories = $this->category->all();
+                return view('setting.category', compact('categories$categories'));
                 break;
             case 'supplier':
-                $locations = $this->supplier->all();
-                return view('setting.location', compact('locations'));
+                $suppliers = $this->supplier->all();
+                return view('setting.supplier', compact('suppliers'));
                 break;
             default:
                 $deparments = $this->department->all();
