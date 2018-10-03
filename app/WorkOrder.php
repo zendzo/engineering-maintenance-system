@@ -48,4 +48,9 @@ class WorkOrder extends Model implements HasMedia
     {
         return $this->belongsTo(Department::class);
     }
+
+    public function registerMediaCollection()
+    {
+        $this->addMediaCollection('images')->singleFile();
+    }
 }
