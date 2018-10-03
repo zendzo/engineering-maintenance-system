@@ -8,6 +8,7 @@ use App\Location;
 use App\Department;
 use App\Category;
 use App\Supplier;
+use App\Role;
 
 class SettingController extends Controller
 {
@@ -33,6 +34,10 @@ class SettingController extends Controller
                 $users = $this->user->where('role_id',4)->get();
                 return $this->renderUserView($users);
                 break;
+            case 'admin':
+                $users = $this->user->where('role_id',2)->get();
+                return $this->renderUserView($users);
+                break;
             case 'location':
                 $locations = $this->location->all();
                 return view('setting.location', compact('locations'));
@@ -54,6 +59,8 @@ class SettingController extends Controller
 
     public function renderUserView($users)
     {
-        return view('setting.users', compact('users'));
+        $roles = Role::select('id','name')->where('id','!=',1)->get();
+
+        return view('setting.users', compact(['users','roles']));
     }
 }

@@ -14,6 +14,8 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>'administrator'], f
 
 	Route::resource('role', 'Admin\RoleController');
 
+	Route::resource('user', 'UserController');
+
 	Route::get('/application-menus',[
 		'as'	=>	'app.menu',
 		'uses'	=>	'Admin\MenuController@index'
