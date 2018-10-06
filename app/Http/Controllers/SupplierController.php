@@ -97,6 +97,17 @@ class SupplierController extends Controller
      */
     public function destroy(Supplier $supplier)
     {
-        //
+        try {
+            $delete = $supplier->delete();
+            if ($delete) {
+                return redirect()->back()->with('message', 'Supplier Data Deleted!')
+                    ->with('status','Successfully Delete Data !')
+                    ->with('type','success');
+            }
+        } catch(\Exception $e){
+            return redirect()->back()->with('message', $e->getMessage())
+                    ->with('status','Failed to delete Data !')
+                    ->with('type','error');
+        }
     }
 }

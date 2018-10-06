@@ -117,9 +117,15 @@
                     <td style="background-color: {{ $event->background_color }}">
                      @include('calendar.maintenance_task_modal')
                     </td>
-                    <td><a class="btn btn-danger btn-small" href="{{ route('admin.asset.destroy', $event->id) }}">
-                      <i class="fa fa-trash-o"></i>
-                    </a></td>
+                    <td>
+                      <form method="POST" action="{{ route('admin.calendar.destroy',$event->id) }}" accept-charset="UTF-8" style="display:inline">
+                          @method('DELETE')
+                          @csrf
+                          <button type="submit" class="btn btn-xs btn-danger">
+                              <i class="fa fa-close fa-fw"></i>
+                          </button>
+                        </form>
+                  </td>
                   </tr>
               @endforeach
             </tbody>

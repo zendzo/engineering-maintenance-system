@@ -87,8 +87,19 @@ class LocationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Location $location)
     {
-        //
+        try {
+            $delete = $location->delete();
+            if ($delete) {
+                return redirect()->back()->with('message', 'Location Data Deleted!')
+                    ->with('status','Successfully Delete Data !')
+                    ->with('type','success');
+            }
+        } catch(\Exception $e){
+            return redirect()->back()->with('message', $e->getMessage())
+                    ->with('status','Failed to delete Data !')
+                    ->with('type','error');
+        }
     }
 }

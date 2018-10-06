@@ -33,16 +33,6 @@ class CalendarController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -51,28 +41,6 @@ class CalendarController extends Controller
     public function store(Request $request)
     {
         return $this->createMaintenanceSchedule($request);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -95,7 +63,18 @@ class CalendarController extends Controller
      */
     public function destroy($id)
     {
-        //
+        try {
+            $delete = $this->schedule->findOrFail($id)->delete();
+            if ($delete) {
+                return redirect()->back()->with('message', 'Maintenance Schedule Data Deleted!')
+                    ->with('status','Successfully Delete Data !')
+                    ->with('type','success');
+            }
+        }catch(\Exception $e){
+            return redirect()->back()->with('message', $e->getMessage())
+                    ->with('status','Failed to delete Data !')
+                    ->with('type','error');
+        }
     }
 
     public function createMaintenanceSchedule($request)

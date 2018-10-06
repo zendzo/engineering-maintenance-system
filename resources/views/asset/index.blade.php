@@ -42,10 +42,17 @@
                   <td>{{ $asset->purcashed_at }}</td>
                   <td>{{ $asset->supplier->name }}</td>
                   <td>{{ str_limit($asset->description, 20) }}</td>
-                  <td>
+                  <td width="10%">
                     <a class="btn btn-xs btn-primary" href="#" data-toggle="modal" data-target="#assetEdit-{{ $asset->id }}">
-                      <i class="fa fa-edit"></i>
+                      <i class="fa fa-pencil fa-fw"></i>
                     </a>
+                    <form method="POST" action="{{ route('admin.asset.destroy',$asset->id) }}" accept-charset="UTF-8" style="display:inline">
+                      @method('DELETE')
+                      @csrf
+                      <button type="submit" class="btn btn-xs btn-danger">
+                         <i class="fa fa-close fa-fw"></i>
+                      </button>
+                   </form>
                 </td>
                 @include('asset.edit_modal')
                 </tr>

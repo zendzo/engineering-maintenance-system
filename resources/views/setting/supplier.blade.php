@@ -38,7 +38,7 @@
                            <div class="modal fade" id="roleModalEdit-{{ $supplier->id }}" tabindex="-1" role="dialog" aria-labelledby="roleModalEdit-{{ $supplier->id }}">
                               @include('setting.supplier.edit_modal')
                            </div>
-                              <form method="POST" action="{{ route('admin.user.destroy',$supplier->id) }}" accept-charset="UTF-8" style="display:inline">
+                              <form method="POST" action="{{ route('admin.supplier.destroy',$supplier->id) }}" accept-charset="UTF-8" style="display:inline">
                               {{ method_field('DELETE') }}
                               {{ csrf_field() }}
                               <button type="submit" class="btn btn-xs btn-danger">

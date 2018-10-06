@@ -90,6 +90,17 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department)
     {
-        //
+        try{
+            $delete = $department->delete();
+            if ($delete) {
+                return redirect()->back()->with('message', 'Department Data Deleted!')
+                    ->with('status','Successfully Delete Data !')
+                    ->with('type','success');
+            }
+        }catch(\Exception $e){
+            return redirect()->back()->with('message', $e->getMessage())
+                    ->with('status','Failed to delete Data !')
+                    ->with('type','error');
+        }
     }
 }

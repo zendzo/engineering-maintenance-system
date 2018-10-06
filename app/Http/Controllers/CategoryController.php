@@ -87,6 +87,17 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
-        //
+        try{
+            $delete = $category->delete();
+            if ($delete) {
+                return redirect()->back()->with('message', 'Location Data Deleted!')
+                    ->with('status','Successfully Delete Data !')
+                    ->with('type','success');
+            }
+        }catch(\Exception $e){
+            return redirect()->back()->with('message', $e->getMessage())
+            ->with('status','Failed to delete Data !')
+            ->with('type','error');
+        }
     }
 }

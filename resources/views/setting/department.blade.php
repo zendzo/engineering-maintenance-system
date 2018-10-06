@@ -34,9 +34,9 @@
                            <div class="modal fade" id="roleModalEdit-{{ $department->id }}" tabindex="-1" role="dialog" aria-labelledby="roleModalEdit-{{ $department->id }}">
                               @include('setting.department.edit_modal')
                            </div>
-                              <form method="POST" action="{{ route('admin.user.destroy',$department->id) }}" accept-charset="UTF-8" style="display:inline">
-                              {{ method_field('DELETE') }}
-                              {{ csrf_field() }}
+                            <form method="POST" action="{{ route('admin.department.destroy',$department->id) }}" accept-charset="UTF-8" style="display:inline">
+                              @csrf
+                              @method('DELETE')
                               <button type="submit" class="btn btn-xs btn-danger">
                                  <span class="fa fa-close fa-fw"></span>
                               </button>
