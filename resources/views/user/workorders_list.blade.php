@@ -79,7 +79,7 @@
                         <a class="btn btn-xs btn-primary" href="#" data-toggle="modal" data-target="#workOrderModal-{{ $workorder->id }}">
                             Edit Work Order <i class="fa fa-edit"></i>
                         </a>
-                        @include('workorder.edit_modal')
+                        @include('user.edit_modal')
                     @endif
                 </div>
             </div>

@@ -113,6 +113,9 @@ class WorkOrderController extends Controller
 
     public function createWorkOrder(Request $request)
     {
+        if(is_null($request['status'])){
+            $request['status'] = 0;
+        }
         try{
             $createWO = $this->workorder->create([
                 'priority' => $request->get('priority'),
@@ -122,7 +125,7 @@ class WorkOrderController extends Controller
                 'order_by' => auth()->id(),
                 'follow_up' => $request->get('follow_up'),
                 'department_id' => $request->get('department'),
-                'status' => $request->get('status')
+                'status' => $request['status']
             ]);
 
            if ($request->hasFile('photo')) {
@@ -185,9 +188,15 @@ class WorkOrderController extends Controller
      */
     public function updateStatus(Request $request, $id)
     {
+        if($request['status'] === 3){
+            $request['finish_at'] = Carbon::now();
+        }
         try{
             
-            $this->workorder->findOrFail($id)->update(['status' => $request->get('status')]);
+            $this->workorder->findOrFail($id)->update([
+                'status' => $request->get('status'),
+                'finish_at' => $request->get('status') === 3 ? Carbon::now() : null
+                ]);
 
             return redirect()->back()
                 ->with('message', 'Work Order Updated!')

@@ -64,7 +64,7 @@
                     <li><a href="{{ route('home') }}">Issue Open</a></li>
                   @endif
                   @if (Auth::user()->role_id === 4)
-                  <li><a href="{{ route('job-done') }}">Issue Done</a></li>
+                  <li><a href="{{ route('job-done') }}">Issue Close</a></li>
                   <li class="divider"></li>
                   <li><a href="{{ route('home') }}">Issue Open</a></li>
                   @endif

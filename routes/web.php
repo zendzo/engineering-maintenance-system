@@ -61,6 +61,11 @@ Route::get('/home/job-done','HomeController@jobDone')->name('job-done');
 Route::post('workorder', 'WorkOrderController@store')
 			->middleware('auth')
 			->name('workorder.store');
+
+Route::put('workorder/{id}/user','WorkOrderController@managerUpdate')
+			->middleware('auth')
+			->name('workorder.update');
+
 Route::put('workorder/{id}', 'WorkOrderController@updateStatus')
 			->middleware('auth')
 			->name('workorder.status.update');

@@ -9,6 +9,8 @@ use App\Department;
 use App\Category;
 use App\User;
 use App\Supplier;
+use App\WorkOrder;
+use App\Observers\WorkOrderObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +21,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        WorkOrder::observe(WorkOrderObserver::class);
+        
         if (! $this->app->runningInConsole()) {
 
             View::share('locations', Location::select('id','name')->get());
