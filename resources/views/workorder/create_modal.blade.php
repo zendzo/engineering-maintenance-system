@@ -7,7 +7,7 @@
         <h4 class="modal-title">Create New Work Order</h4>
       </div>
       <div class="modal-body">
-          <form role="form"  action="{{ route('admin.workorder.store') }}" method="POST" enctype="multipart/form-data">
+          <form role="form"  action="{{ route('workorder.store') }}" method="POST" enctype="multipart/form-data">
               {{ csrf_field() }}
 
               <div class="form-group{{ $errors->has('priority') ? ' has-error' : '' }}">
@@ -27,6 +27,22 @@
                       </span>
                   @endif
               </div>
+
+              @if (Auth::user()->role_id === 1)
+              <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
+                    <label for="status" class="control-label">Status</label>
+                    <select class="form-control" name="status" id="status">
+                        @foreach ($workordersStatus as $key => $value)
+                        <option value="{{$key}}">{{ title_case($value) }}</option>
+                        @endforeach
+                    </select>
+                        @if ($errors->has('status'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('status') }}</strong>
+                            </span>
+                        @endif
+                    </div>
+              @endif
 
               <div class="form-group{{ $errors->has('location') ? ' has-error' : '' }}">
                 <label for="location" class="control-label">Location</label>
@@ -70,19 +86,21 @@
                       @endif
                 </div>
 
+                @if (Auth::user()->role_id === 1)
                 <div class="form-group{{ $errors->has('follow_up') ? ' has-error' : '' }}">
                     <label for="follow_up" class="control-label">Follow Up By</label>
                     <select class="form-control" name="follow_up" id="follow_up">
-                      @foreach ($engineers as $engineer)
-                          <option value="{{ $engineer->id }}">{{ $engineer->username }}</option>
-                      @endforeach
+                        @foreach ($engineers as $engineer)
+                            <option value="{{ $engineer->id }}">{{ $engineer->username }}</option>
+                        @endforeach
                     </select>
-                      @if ($errors->has('engineer'))
-                          <span class="help-block">
-                              <strong>{{ $errors->first('name') }}</strong>
-                          </span>
-                      @endif
+                        @if ($errors->has('engineer'))
+                            <span class="help-block">
+                                <strong>{{ $errors->first('name') }}</strong>
+                            </span>
+                        @endif
                 </div>
+                @endif
 
                 <div class="form-group{{ $errors->has('job') ? ' has-error' : '' }}">
                   <label for="job" class="control-label">Job</label>

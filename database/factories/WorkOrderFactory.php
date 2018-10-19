@@ -7,7 +7,7 @@ $factory->define(App\WorkOrder::class, function (Faker $faker) {
     return [
         'finish_at' => Carbon::now(),
         'priority' => rand(1,3),
-        'location_id' => rand(1,5),
+        'location_id' => rand(1,3),
         'category_id' => rand(1,5),
         'job' => $faker->sentence,
         'order_by' => 1,

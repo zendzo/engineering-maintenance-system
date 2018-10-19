@@ -22,7 +22,7 @@ class WorkOrderController extends Controller
      */
     public function index()
     {
-        $workorders = $this->workorder->all()->sortByDesc('id');
+        $workorders = $this->workorder->select('*')->orderBy('id','DESC')->get();
 
         return view('workorder.index', compact(['workorders']));
     }
@@ -96,16 +96,16 @@ class WorkOrderController extends Controller
     {
         switch ($status) {
             case 'today':
-                $workorders = $this->workorder->where('created_at','>=',Carbon::today())->get();
+                $workorders = $this->workorder->where('created_at','>=',Carbon::today())->orderBy('id','DESC')->get();
                 break;
             case 'progress':
-                $workorders = $this->workorder->where('status',1)->get();
+                $workorders = $this->workorder->where('status',1)->orderBy('id','DESC')->get();
                 break;
             case 'pending':
-                $workorders = $this->workorder->where('status',2)->get();
+                $workorders = $this->workorder->where('status',2)->orderBy('id','DESC')->get();
                 break;
             case 'done':
-                $workorders = $this->workorder->where('status',3)->get();
+                $workorders = $this->workorder->where('status',3)->orderBy('id','DESC')->get();
                 break;;
         }
         return view('workorder.index', compact('workorders'));
@@ -126,7 +126,7 @@ class WorkOrderController extends Controller
             ]);
 
            if ($request->hasFile('photo')) {
-            $createWO->addMediaFromRequest('photo')->toMediaCollection('images');
+                $createWO->addMediaFromRequest('photo')->toMediaCollection('images');
            }
 
             return redirect()->back()
@@ -151,7 +151,6 @@ class WorkOrderController extends Controller
             'location_id' => $request->get('location'),
             'category_id' => $request->get('category'),
             'job' => $request->get('job'),
-            'order_by' => auth()->id(),
             'follow_up' => $request->get('follow_up'),
             'department_id' => $request->get('department'),
             'status' => $request->get('status')
@@ -164,8 +163,8 @@ class WorkOrderController extends Controller
 
         if ($update) {
             return redirect()->back()
-                ->with('message', 'Work Order Saved!')
-                ->with('status','Data Successfully Saved!')
+                ->with('message', 'Work Order Updated!')
+                ->with('status','Data Successfully Updated!')
                 ->with('type','success');
         }
 
@@ -174,5 +173,30 @@ class WorkOrderController extends Controller
             ->with('message', $e->getMessage())
             ->with('status','Failed to Update Entry Data !');
        }
+    }
+
+    /**
+     * updateStatus
+     *
+     * @param  mixed $request
+     * @param  mixed $workorder
+     *
+     * @return void
+     */
+    public function updateStatus(Request $request, $id)
+    {
+        try{
+            
+            $this->workorder->findOrFail($id)->update(['status' => $request->get('status')]);
+
+            return redirect()->back()
+                ->with('message', 'Work Order Updated!')
+                ->with('status','Data Successfully updated!')
+                ->with('type','success');
+        }catch(\Exception $e){
+            return redirect()->back()
+            ->with('message', $e->getMessage())
+            ->with('status','Failed to Update Entry Data !');
+        }
     }
 }

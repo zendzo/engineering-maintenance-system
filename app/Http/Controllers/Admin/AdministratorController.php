@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\WorkOrder;
 
 class AdministratorController extends Controller
 {
@@ -14,6 +15,8 @@ class AdministratorController extends Controller
      */
     public function index()
     {
-        return view('administrator.index');
+        $workorders = WorkOrder::all();
+
+        return view('administrator.index',compact('workorders'));
     }
 }

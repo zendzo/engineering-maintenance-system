@@ -53,4 +53,8 @@ class WorkOrder extends Model implements HasMedia
     {
         $this->addMediaCollection('images')->singleFile();
     }
+
+    public function setStatusAttribute(){
+        $this->attribute['status'] ? $this->attribute['status'] : '0';
+    }
 }

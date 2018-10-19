@@ -55,3 +55,12 @@ Route::group(['prefix'=>'admin','as'=>'admin.','middleware'=>'administrator'], f
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/home/job-done','HomeController@jobDone')->name('job-done');
+
+Route::post('workorder', 'WorkOrderController@store')
+			->middleware('auth')
+			->name('workorder.store');
+Route::put('workorder/{id}', 'WorkOrderController@updateStatus')
+			->middleware('auth')
+			->name('workorder.status.update');

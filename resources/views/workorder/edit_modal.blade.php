@@ -32,19 +32,21 @@
                       @endif
                   </div>
 
+                  @if (Auth::user()->role_id === 1)
                   <div class="form-group{{ $errors->has('status') ? ' has-error' : '' }}">
-                      <label for="status" class="control-label">Status</label>
-                      <select class="form-control" name="status" id="status">
-                        @foreach ($workordersStatus as $key => $value)
-                          <option value="{{$key}}" {{ $workorder->status == $key ? "selected" : ''  }}>{{ title_case($value) }}</option>
-                        @endforeach
-                      </select>
-                        @if ($errors->has('status'))
-                            <span class="help-block">
-                                <strong>{{ $errors->first('status') }}</strong>
-                            </span>
-                        @endif
-                    </div>
+                        <label for="status" class="control-label">Status</label>
+                        <select class="form-control" name="status" id="status">
+                          @foreach ($workordersStatus as $key => $value)
+                            <option value="{{$key}}" {{ $workorder->status == $key ? "selected" : ''  }}>{{ title_case($value) }}</option>
+                          @endforeach
+                        </select>
+                          @if ($errors->has('status'))
+                              <span class="help-block">
+                                  <strong>{{ $errors->first('status') }}</strong>
+                              </span>
+                          @endif
+                      </div>
+                  @endif
 
                   <div class="form-group{{ $errors->has('location') ? ' has-error' : '' }}">
                     <label for="location" class="control-label">Location</label>

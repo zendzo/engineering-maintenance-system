@@ -106,6 +106,7 @@
    $(function () {
     $('#workorder-datatable').DataTable({
       responsive: true,
+      "aaSorting" : [[0,"desc"]],
       dom: 'Bfrtip',
         buttons: [
           {

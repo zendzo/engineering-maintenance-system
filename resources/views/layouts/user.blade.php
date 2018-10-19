@@ -56,8 +56,21 @@
                   <li><a href="{{ route('register') }}">Register</a></li>
                   <li><a href="{{ route('password.request') }}">Reset Password</a></li>
                 @endif
-                <li class="divider"></li>
-                <li><a href="#">One more separated link</a></li>
+                @if (Auth::check())
+                  @if (Auth::user()->role_id === 2 || Auth::user()->role_id === 3)
+                    <li><a href="" id="create-modal">New Work Order</a></li>
+                    <li class="divider"></li>
+                    <li><a href="{{ route('job-done') }}">Issue Close</a></li>
+                    <li><a href="{{ route('home') }}">Issue Open</a></li>
+                  @endif
+                  @if (Auth::user()->role_id === 4)
+                  <li><a href="{{ route('job-done') }}">Issue Done</a></li>
+                  <li class="divider"></li>
+                  <li><a href="{{ route('home') }}">Issue Open</a></li>
+                  @endif
+                @endif
+                {{-- <li class="divider"></li>
+                <li><a href="#">One more separated link</a></li> --}}
               </ul>
             </li>
           </ul>

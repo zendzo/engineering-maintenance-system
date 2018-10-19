@@ -11,6 +11,7 @@
 
         <p>
             {{ title_case(Auth::user()->fullName ) }}
+            <small>{{ Auth::user()->role->name }}</small>
             <small>Member since {{ Auth::user()->created_at->diffForHumans() }}</small>
         </p>
         </li>
