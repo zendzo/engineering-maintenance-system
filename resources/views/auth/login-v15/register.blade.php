@@ -42,6 +42,16 @@
             <input class="input100" type="password" name="password_confirmation" placeholder="Enter password">
             <span class="focus-input100"></span> 
         </div>
+
+        <div class="wrap-input100 validate-input m-b-18" data-validate="Password Confirmation is required">
+            <span class="label-input100">Jabatan</span>
+            <select name="role_id" id="role_id" class="input100">
+                @foreach ($userRoles as $role)
+                    <option value="{{ $role->id }}">{{ $role->name }}</option>
+                @endforeach
+            </select>
+            <span class="focus-input100"></span> 
+        </div>
   
           <div class="flex-sb-m w-full p-b-30">
               <div class="contact100-form-checkbox">

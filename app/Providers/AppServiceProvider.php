@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
+use App\Role;
 use App\Location;
 use App\Department;
 use App\Category;
@@ -38,6 +39,8 @@ class AppServiceProvider extends ServiceProvider
             $status = ['new','on progress','pending','done'];
 
             View::share('workordersStatus', collect($status));
+
+            View::share('userRoles', Role::where('id','!=',1)->get());
 
         }
     }
